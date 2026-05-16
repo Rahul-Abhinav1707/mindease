@@ -29,6 +29,12 @@ app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", service: "mindease-api" });
 });
 
+app.get("/", (_req, res, next) => {
+  res.sendFile(path.join(clientDistPath, "index.html"), (error) => {
+    if (error) next(error);
+  });
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/journals", journalRoutes);

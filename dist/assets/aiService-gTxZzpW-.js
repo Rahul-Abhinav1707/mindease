@@ -1,0 +1,1 @@
+import{e as t}from"./index-_irOYLED.js";const i={async getHistory(){const{data:a}=await t.get("/ai/history");return a},async sendGuideMessage(a){const{data:e}=await t.post("/ai/guide",a);return e}};export{i as a};
