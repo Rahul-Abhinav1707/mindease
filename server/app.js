@@ -10,6 +10,8 @@ import journalRoutes from "./routes/journalRoutes.js";
 import moodRoutes from "./routes/moodRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import settingsRoutes from "./routes/settingsRoutes.js";
+import { getDatabaseState } from "./config/db.js";
+import { requireDatabase } from "./middleware/databaseMiddleware.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const app = express();
@@ -26,7 +28,7 @@ app.use(express.json({ limit: "10kb" }));
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 
 app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", service: "mindease-api" });
+  res.json({ status: "ok", service: "mindease-api", database: getDatabaseState() });
 });
 
 app.get("/", (_req, res, next) => {
@@ -35,12 +37,12 @@ app.get("/", (_req, res, next) => {
   });
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/ai", aiRoutes);
-app.use("/api/journals", journalRoutes);
-app.use("/api/moods", moodRoutes);
-app.use("/api/activities", activityRoutes);
-app.use("/api/settings", settingsRoutes);
+app.use("/api/auth", requireDatabase, authRoutes);
+app.use("/api/ai", requireDatabase, aiRoutes);
+app.use("/api/journals", requireDatabase, journalRoutes);
+app.use("/api/moods", requireDatabase, moodRoutes);
+app.use("/api/activities", requireDatabase, activityRoutes);
+app.use("/api/settings", requireDatabase, settingsRoutes);
 
 app.use(express.static(clientDistPath));
 app.get("*", (req, res, next) => {
