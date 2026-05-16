@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import authRoutes from "./routes/authRoutes.js";
@@ -17,7 +16,6 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const clientDistPath = path.join(__dirname, "..", "dist");
-const hasClientBuild = fs.existsSync(path.join(clientDistPath, "index.html"));
 
 app.use(helmet());
 app.use(cors({
@@ -38,12 +36,16 @@ app.use("/api/moods", moodRoutes);
 app.use("/api/activities", activityRoutes);
 app.use("/api/settings", settingsRoutes);
 
-if (hasClientBuild) {
-  app.use(express.static(clientDistPath));
-  app.get(/^\/(?!api).*/, (_req, res) => {
-    res.sendFile(path.join(clientDistPath, "index.html"));
+app.use(express.static(clientDistPath));
+app.get("*", (req, res, next) => {
+  if (req.path.startsWith("/api")) {
+    return next();
+  }
+
+  return res.sendFile(path.join(clientDistPath, "index.html"), (error) => {
+    if (error) next(error);
   });
-}
+});
 
 app.use(notFound);
 app.use(errorHandler);
