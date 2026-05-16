@@ -28,7 +28,7 @@ const activitySchema = new mongoose.Schema(
       default: {}
     }
   },
-  { timestamps: true }
+  { timestamps: true, bufferCommands: false }
 );
 
 activitySchema.index({ user: 1, createdAt: -1 });

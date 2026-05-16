@@ -20,7 +20,7 @@ const aiMessageSchema = new mongoose.Schema(
       maxlength: 5000
     }
   },
-  { timestamps: true }
+  { timestamps: true, bufferCommands: false }
 );
 
 aiMessageSchema.index({ user: 1, createdAt: -1 });

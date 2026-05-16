@@ -24,7 +24,7 @@ const moodCheckInSchema = new mongoose.Schema(
       maxlength: 1000
     }
   },
-  { timestamps: true }
+  { timestamps: true, bufferCommands: false }
 );
 
 moodCheckInSchema.index({ user: 1, createdAt: -1 });

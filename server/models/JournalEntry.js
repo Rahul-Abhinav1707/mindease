@@ -31,7 +31,7 @@ const journalEntrySchema = new mongoose.Schema(
       trim: true
     }
   },
-  { timestamps: true }
+  { timestamps: true, bufferCommands: false }
 );
 
 journalEntrySchema.index({ user: 1, createdAt: -1 });

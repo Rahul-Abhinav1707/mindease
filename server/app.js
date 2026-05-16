@@ -4,14 +4,14 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { getDatabaseState } from "./config/db.js";
+import { requireDatabase } from "./middleware/databaseMiddleware.js";
 import authRoutes from "./routes/authRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import journalRoutes from "./routes/journalRoutes.js";
 import moodRoutes from "./routes/moodRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import settingsRoutes from "./routes/settingsRoutes.js";
-import { getDatabaseState } from "./config/db.js";
-import { requireDatabase } from "./middleware/databaseMiddleware.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const app = express();

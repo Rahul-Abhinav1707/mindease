@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema(
       }
     }
   },
-  { timestamps: true }
+  { timestamps: true, bufferCommands: false }
 );
 
 userSchema.pre("save", async function hashPassword(next) {
