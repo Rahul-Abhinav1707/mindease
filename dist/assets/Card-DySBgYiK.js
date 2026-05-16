@@ -1,1 +1,0 @@
-import{j as r,g as a}from"./index-_irOYLED.js";function m({className:e,children:s}){return r.jsxDEV("div",{className:a("glass-panel rounded-[1.75rem]",e),children:s},void 0,!1,{fileName:"D:/PROJECT/src/components/ui/Card.jsx",lineNumber:4,columnNumber:10},this)}export{m as C};

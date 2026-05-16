@@ -12,6 +12,7 @@ import journalRoutes from "./routes/journalRoutes.js";
 import moodRoutes from "./routes/moodRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import settingsRoutes from "./routes/settingsRoutes.js";
+import debugRoutes from "./routes/debugRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const app = express();
@@ -43,6 +44,7 @@ app.use("/api/journals", requireDatabase, journalRoutes);
 app.use("/api/moods", requireDatabase, moodRoutes);
 app.use("/api/activities", requireDatabase, activityRoutes);
 app.use("/api/settings", requireDatabase, settingsRoutes);
+app.use("/api/debug", debugRoutes);
 
 app.use(express.static(clientDistPath));
 app.get("*", (req, res, next) => {

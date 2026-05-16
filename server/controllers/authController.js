@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import { generateToken } from "../utils/generateToken.js";
+import { getDatabaseState, isDatabaseReady } from "../config/db.js";
 
 const createSession = (user) => ({
   token: generateToken(user._id),
@@ -8,6 +9,10 @@ const createSession = (user) => ({
 
 export async function register(req, res, next) {
   try {
+    if (!isDatabaseReady()) {
+      return res.status(503).json({ message: "Database is not connected yet. Please retry in a moment.", database: getDatabaseState() });
+    }
+
     const { fullName, email, password } = req.body;
     const existingUser = await User.findOne({ email });
 
@@ -24,6 +29,10 @@ export async function register(req, res, next) {
 
 export async function login(req, res, next) {
   try {
+    if (!isDatabaseReady()) {
+      return res.status(503).json({ message: "Database is not connected yet. Please retry in a moment.", database: getDatabaseState() });
+    }
+
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
 
