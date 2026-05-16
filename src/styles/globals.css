@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 33% 99%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --muted: 220 20% 96%;
+    --muted-foreground: 220 10% 42%;
+    --border: 220 19% 88%;
+    color-scheme: light;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    --card: 224 39% 14%;
+    --card-foreground: 210 40% 98%;
+    --muted: 224 32% 18%;
+    --muted-foreground: 215 20% 72%;
+    --border: 224 30% 24%;
+    color-scheme: dark;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-background font-body text-foreground antialiased transition-colors duration-200;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading tracking-normal;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply border border-white/40 bg-white/75 shadow-soft backdrop-blur-md dark:border-white/10 dark:bg-white/[0.07];
+  }
+
+  .soft-gradient-text {
+    @apply bg-gradient-to-r from-primary via-secondary to-success bg-clip-text text-transparent;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+}
